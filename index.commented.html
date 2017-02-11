@@ -36,56 +36,58 @@ u = d = l = r = 0;
 // The content of this function is passed to RegPack.
 // (Settings: do not rename var "b", score: 1/1/0)
 // The result (998 bytes long) is then placed in the following snippet without the final eval statement:
-// t=c=H=u=d=l=r=0;(PACKED CODE);setInterval(_,33)
+// t=H=u=d=l=r=0;(PACKED CODE);setInterval(_,33)
 // Which makes a total of 1024b.
 // Note: the variable 'q' is renamed to 'H' by RegPack.
 setInterval(function(e){
 
-//
+// If the game has started (t > 0):
+// (t=0 on load, so this part of the code is ignored. Then at each frame, t>0 and this part is executed).
 t
 ?(
   
-  //
-  x > 45 && c++
+  // Increment c if the bunny's X position is over 45in.
+  // (the tile containing the carrot is the only walkable tile on the 15th column, so walking on it is the winning criteria).
+  x > 45
   
-  //
-  ?(
-    //
+  // If the carrot is found (c != 0):
+  ? (
+  
+    // Reset the rabbit's angle to 0.
     a = 0,
     
-    //
+    // Give the scene a CSS transition duration of 5 seconds.
     s.style.transition = `5s`,
     
-    //
+    // Then give the scene a different angle and position to see it dezoomed and from above.
+    // (The last closing parenthesis of a CSS rule can be omitted)
     s.style.transform = `rotateX(25deg)translate3D(-23in,-23in,-23in`
   )
-  :(
-    
+  
+  //
+  : s.style.transform = `rotateX(.8rad)rotateZ(${a}rad)translate(${-x}in,${-y}in`,
+  
+  //
+  v = x,
+  
+  //
+  w = y,
+  
+  //
+  x += (d - u) / 9 * Math.sin(
+  
     //
-    v = x,
-    
-    //
-    w = y,
-    
-    //
-    x += (d - u) / 9 * Math.sin(
-    
-      //
-      a += (l - r) / 30
-    ),
-    
-    //
-    y += (d - u) / 9 * Math.cos(a),
-    
-    //
-    x > 0 && y > 0 && this[`g${~~(y / 3)}` + ~~(x / 3)] || (x = v, y = w),
-    
-    //
-    h.style.transform = `translate3D(${x}in,${y}in,${3-Math.sin(t / 5)}em)rotateZ(${-a}rad)rotateX(5rad`,
-    
-    //
-    s.style.transform = `rotateX(.8rad)rotateZ(${a}rad)translate(${-x}in,${-y}in`
-  )
+    a += (l - r) / 30
+  ),
+  
+  //
+  y += (d - u) / 9 * Math.cos(a),
+  
+  //
+  x > 0 && y > 0 && this[`g${~~(y / 3)}` + ~~(x / 3)] || (x = v, y = w),
+  
+  //
+  h.style.transform = `translate3D(${x}in,${y}in,${3 - Math.sin(t / 5)}em)rotateZ(${-a}rad)rotateX(5rad`
 )
 :(
   
@@ -130,7 +132,7 @@ for(i in m = [5120,22511,29732,13540,29829,57087])
       this[`t${i + j}`] && (
         
         //
-        c && (
+        x > 45 && (
           
           //
           this[`t${i + j}`].style.transition = `5s`
