@@ -1,0 +1,50 @@
+﻿<body id=b>
+<script>
+t=c=0;
+setInterval(e=>{
+  if(t){
+    v=x;
+    w=y;
+    if(k[2])a-=.05;
+    else if(k[0])a+=.05;
+    else if(k[1]){y+=20*Math.cos(a);x+=20*Math.sin(a)}
+    else if(k[3]){y-=20*Math.cos(a);x-=20*Math.sin(a)}
+    if(y>0||(!(m[~~(-y/250)]>>(~~(-x/250))&1))){x=v;y=w}
+    h.style.transform=`translateX(${-x}px)translateY(${-y}px)translateZ(${80-20*Math.sin(t)}px)rotateZ(${-a}rad)rotateX(-80deg)`;
+    if(!c)s.style.transform=`rotateX(55deg)rotateZ(${a}rad)translateX(${x}px)translateY(${y}px)`;
+    else{
+      s.style.transition=b.style.transition=`5s`;
+      s.style.transform=`rotateX(30deg)translateX(-2000px)translateY(-2000px)translateZ(-2000px)`;
+      a=0
+    }
+    for(i in m){
+      for(j=16;j--;){
+        if(self[`t${i+j}`]){
+          if(c)self[`t${i+j}`].style.transition=`5s`;
+          self[`t${i+j}`].style.transform=`translateX(${j*250+99}px)translateY(${i*250-99}px)translateZ(190px)rotateZ(${-a}rad)rotateX(-90deg)scale(2.5)`
+        }
+      }
+    }
+  }
+  else{
+    b.innerHTML=`<div style=width:95vw;height:500px;perspective:600px;overflow:hidden;background:#5be><div style=transform-style:preserve-3d;margin:250px+45vw;transform-origin:0+0;background:#0d1;box-shadow:0+0+400px+400px#0d1;width:4000px;height:1600px id=s><div style=width:55px;font:40px'' id=h>🐰<div style=transform:rotate(180deg)translateY(9px);font:50px''>🎩</div></div><div id=r>`;
+    k=[];
+    onkeydown=e=>k[e.which-37]=1;
+    onkeyup=e=>k[e.which-37]=0;
+    x=y=-330;
+    a=5;
+    m=[5120,22511,29732,13540,29829,57087];
+    for(i in m){
+      for(j=16;j--;){
+        if(m[i]>>j&1){
+          s.innerHTML+=`<div style=width:255px;height:255px;background:#b71;position:fixed;top:${250*i}px;left:${250*j}px>`;
+        }
+        else if((j+ +i)%4)r.innerHTML+=`<div id=t${i+j} style=font-size:120px;position:fixed>${[...'🌳🌲🌵'][((i+1)*(j+1))%3]}`;
+      }
+    }
+    r.innerHTML+=`<div id=t${515} style=font-size:30px;position:fixed>🥕`
+  }
+  if(x<-3850)c=1;
+  t+=.3
+},33)
+</script>

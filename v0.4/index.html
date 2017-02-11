@@ -1,0 +1,69 @@
+﻿<body id=b>
+<script>
+t=c=0;
+setInterval(function(e){
+
+/* golf starts here */
+
+  if(t){
+    v=x;
+    w=y;
+    a+=(!k[2]-!k[0])/20;
+    x-=(!k[3]-!k[1])*20*Math.sin(a);
+    y-=(!k[3]-!k[1])*20*Math.cos(a);
+    (x<0||y<0||!(m[~~(y/290)]>>(~~(x/290))&1))&&(x=v,y=w);
+    h.style.transform=`translateX(${x}px)translateY(${y}px)translateZ(${80-20*Math.sin(t/3)}px)rotateZ(${-a}rad)rotateX(-1.2rad)`;
+    s.style.transform=`rotateX(55deg)rotateZ(${a}rad)translateX(${-x}px)translateY(${-y}px)`;
+    c&&(
+      s.style.transition=b.style.transition=`5s`,s.style.transform=`rotateX(30deg)translateX(-23in)translateY(-23in)translateZ(-23in)`,
+      a=0
+    );
+    for(i in m)
+      for(j=16;j--;)
+        self[`t${i+j}`]&&(
+          c&&(
+            self[`t${i+j}`].style.transition=`5s`
+          ),
+          self[`t${i+j}`].style.transform=`translateX(${j*3+1}in)translateY(${i*3-1}in)translateZ(2in)rotateZ(${-a}rad)rotateX(-1.2rad)scale(3)`
+        );
+  }
+  else{
+    b.innerHTML=`<div style=height:5in;perspective:6in;overflow:hidden;background:#0d1><div style=transform-style:preserve-3d;margin:3in+50%;transform-origin:0+0 id=s><div style=width:55px;font:40px'' id=h>🐰<div style=transform:rotate(180deg)translateY(9px);font:50px''>🎩`;
+    k=[];
+    onkeydown=e=>k[e.which-37]=1;
+    onkeyup=e=>k[e.which-37]=0;
+    ontouchstart=e=>{
+      console.log(e);
+      e.preventDefault();
+      if(e.pageY<200)q=38;
+      else if(e.pageY>400)q=40;
+      else if(e.pageX<innerWidth/2)q=37;
+      else q=39;
+      onkeydown({which:q})
+    };
+    ontouchmove=e=>e.preventDefault();
+    ontouchend=e=>{e.preventDefault();onkeyup({which:q});}
+    x=y=330;
+    a=5;
+    m=[5120,22511,29732,13540,29829,57087];
+    for(i in m)
+      for(j=16;j--;)
+        s.innerHTML+=(m[i]>>j&1)?
+          `<div style=width:3in;height:3in;background:#b71;position:fixed;top:${3*i}in;left:${3*j}in>`
+          :((j+ +i)%4)?
+            `<div id=t${i+j} style=font-size:1in;position:fixed>${[...'🌳🌲🌵🌴'][((i+1)*(j+1))%4]}`
+            :'';
+    s.innerHTML+=`<div id=t${515} style=font-size:30px;position:fixed>🥕`
+  }
+  x>4300&&(c=1);
+  t++
+
+/* Golf ends here */
+
+// packed code must be below 1018b.
+
+
+
+}
+,33)
+</script>

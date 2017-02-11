@@ -1,0 +1,46 @@
+<body id=b>
+<script>
+k=[t=c=q=0];
+setInterval(function(e){
+/* golf starts here */
+  t
+  ?(
+    x>4330&&(c=1),
+    v=x,
+    w=y,
+    a+=(!k[2]-!k[0])/30,
+    x-=(!k[3]-!k[1])*12*Math.sin(a),
+    y-=(!k[3]-!k[1])*12*Math.cos(a),
+    self[`g${~~(y/288)}`+~~(x/288)]||(x=v,y=w),
+    h.style.transform=`translateX(${x}px)translateY(${y}px)translateZ(${80-20*Math.sin(t/3)}px)rotateZ(${-a}rad)rotateX(-80deg)`,
+    s.style.transform=`rotateX(40deg)rotateZ(${a}rad)translateX(${-x}px)translateY(${-y}px)`,
+    c&&(a=0,s.style.transition=`5s`,s.style.transform=`rotateX(25deg)translateX(-23in)translateY(-19in)translateZ(-23in)`)
+  )
+  :(
+    z=navigator.platform[5],
+    b.innerHTML=`<div style=height:95vh;perspective:6in;overflow:hidden;background:#0c0><div style=transform-style:preserve-3d;margin:3in+50%;transform-origin:0+0 id=s><div style=width:${z?5:6}8px;font:3em'' id=h>🐰<div style=transform:scale(-1)translateY(9px);font:60px/${z?1:5}0px''>🎩`,
+    onkeydown=e=>k[e.which-37]=1,
+    onkeyup=e=>k[e.which-37]=0,
+    x=y=330,
+    a=5,
+    s.innerHTML+=`<a style=position:fixed;font:2em'';padding:2em+0+0 id=t515>🥕<a style=position:fixed;font:2em'';padding:2em+0+0 id=t010>🦉<a style=position:fixed;font:2em'';padding:2em+0+0 id=t40>🐍<a style=position:fixed;font:2em'';padding:2em+0+0 id=t114>🐌`
+  );
+  for(i in m=[5120,22511,29732,13540,29829,57087])
+    for(j=16;j--;)
+      t
+      ?(
+        c&&self[`t${i+j}`]&&(self[`t${i+j}`].style.transition=`5s`),
+        self[`t${i+j}`]&&(self[`t${i+j}`].style.transform=`translateX(${j*3+1}in)translateY(${i*3+.2}in)translateZ(${z?1.5:2}in)rotateZ(${-a}rad)rotateX(-60deg)scale(3)`)
+      )
+      :(
+        s.innerHTML+=
+        m[i]>>j&1
+        ?`<div id=g${i+j} style=position:fixed;width:19em;height:19em;background:#961;transform:translateX(${3*j}in)translateY(${3*i-.5}in)>`
+        :q++%8
+        ?`<div id=t${i+j} style=position:fixed;font:1in''>`+[...`🌳🌲🌵🌴`][q%4]
+        :``
+      ); 
+  t++
+/* Golf ends here. Packed code must be below 1005b. (the other 19b are used by `k=[t=c=q=0];` and setInterval) */
+}, 33)
+</script>
