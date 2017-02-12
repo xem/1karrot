@@ -40,47 +40,67 @@ u = d = l = r = 0;
 setInterval(function(e){
 
 // If the game has started (t > 0):
-// (On load, t==0, so this part of the code is ignored.).
+// On load, t==0, so this part of the code is ignored.
+// Then, it is executed at each frame.
 t
 ?(
 
   // backup the value of x and y (the rabbit's position)
   v = x,
-  
-  //
   w = y,
   
-  //
+  // Update the rabbit's x, y and angle (a) according to the keys pressed:
+  // a is incremented or decremented of 1/30 radian with left and right keys.
+  // then x and y are incremented or decremented of 1/9 inch along this angle with up and down keys.
+  // (d-u) and (l-r) are equal to 1 or -1 according to the keys pressed.
+  // If no key is pressed, (d-u) and (l-r) are equal to zero, so nothing moves.
   x += (d - u) / 9 * Math.sin(
-  
-    //
     a += (l - r) / 30
   ),
-  
-  //
   y += (d - u) / 9 * Math.cos(a),
   
-  //
+  // Prevent the rabbit from going out of bounds (negative x or y) or out of the brown path:
+  // Each brown tile has an id of the form `g{tile_y}{tile_x}`, and measures 3in * 3in.
+  // Check if x > 0, y > 0 or if a ground tile exists below the rabbit (this[`g{~~y/3}{~~x/3}`]).
+  // If one of these three conditions is not fullfilled, revert x and y to their backup values.
+  // This is how the game's collisions work.
   x > 0 && y > 0 && this[`g${~~(y / 3)}` + ~~(x / 3)] || (x = v, y = w),
   
-  //
+  // Place the rabbit on the scene according to x, y and a.
+  // On the Z coordinate, the frame counter is passed to 3-Math.sin(t/5).
+  // This makes the rabbit jump at the right speed and height, in em.
+  // the final rotateX(5rad) is used to make the rabbit less vertical, and more slanted towards the camera.
+  // In CSS, the last closing parenthesis of a rule can be omitted.
   h.style.transform = `translate3D(${x}in,${y}in,${3 - Math.sin(t / 5)}em)rotateZ(${-a}rad)rotateX(5rad`
 )
 :(
   
-  //
-  b.innerHTML = 
-  `<div style=height:95vh;perspective:7in;overflow:hidden;background:#6e0>
-    <div style=transform-style:preserve-3d;margin:3in+50% id=s>
-      <a style=position:fixed;font:2em'';padding:2em+0+0 id=t515>🥕
-      <a style=position:fixed;font:2em'';padding:2em+0+0 id=t010>🐒
-      <a style=position:fixed;font:2em'';padding:2em+0+0 id=t40>🐍
-      <a style=position:fixed;font:2em'';padding:2em+0+0 id=t114>🐌
-      <a style=position:fixed;font:2em'';padding:2em+0+0 id=t59>🦍
-      <a style=position:fixed;font:2em'';padding:2em+0+0 id=t24>🐆
-      <a style=position:fixed;font:2em'';padding:2em+0+0 id=t38>🐢
-      <a><div style=position:fixed;width:.${navigator.platform[5]?6:7}in;font:3em'' id=h>🐰
-        <div style=font:60px/.${navigator.platform[5]?1:5}in'';transform:scale(-1)translateY(9px>🎩`,
+  // On the first frame, write some HTML inside the body element (b)
+  b.innerHTML =
+  
+  // The scene container, used to set the viewport's height (95vh), perspective (7in) and background (green).
+  `<div style=height:95vh;perspective:7in;overflow:hidden;background:#6e0>`
+  +
+    // The scene (s), used to force "preserve-3D" in all the game (otherwise, the rendering would be isometric)
+    // and place everything around the center of the viewport (top: 3in, left: 50%).
+    `<div style=transform-style:preserve-3d;margin:3in+50%;transform-origin:0+0 id=s>`
+      
+    +
+
+    `<a style=position:fixed;font:2em'';padding:2em+0+0 id=t515>🥕
+    <a style=position:fixed;font:2em'';padding:2em+0+0 id=t010>🐒
+    <a style=position:fixed;font:2em'';padding:2em+0+0 id=t40>🐍
+    <a style=position:fixed;font:2em'';padding:2em+0+0 id=t114>🐆
+    <a style=position:fixed;font:2em'';padding:2em+0+0 id=t59>🦍
+    <a style=position:fixed;font:2em'';padding:2em+0+0 id=t24>🐌
+    <a style=position:fixed;font:2em'';padding:2em+0+0 id=t012>🐂
+    <a style=position:fixed;font:2em'';padding:2em+0+0 id=t10>🐥
+    <a style=position:fixed;font:2em'';padding:2em+0+0 id=t38>🐢`
+    
+    +
+    
+    `<a><div style=position:fixed;width:.${navigator.platform[5]?6:7}in;font:3em'' id=h>🐰`
+      `<div style=font:60px/.${navigator.platform[5]?1:5}in'';transform:scale(-1)translateY(9px>🎩`,
   
   //
   onkeydown= e => this['lurdl*d*l*ur*u'[(e.which + 3) % 20]] = 1,
