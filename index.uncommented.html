@@ -24,18 +24,18 @@ for(i in m=[5120,22511,29732,13540,29829,57087])
     ?(
       this[`t${i+j}`]&&(
         x>46?(
-          h.style.transition=s.style.transition=this[`t${i+j}`].style.transition=`5s`,
+          s.style.transition=this[`t${i+j}`].style.transition=`5s`,
           a=0,
-          s.style.transform=`rotateX(25deg)translate3D(-23in,-23in,-23in`
+          s.style.transform=`rotateX(.45rad)translate3D(-23in,-23in,-23in`
         )
         :s.style.transform=`rotateX(.8rad)rotateZ(${a}rad)translate(${-x}in,${-y}in`,
-        this[`t${i+j}`].style.transform=`translate3D(${j*3+2}in,${i*3+1.5}in,${navigator.platform[5]?1.5:2}in)rotateZ(${-a}rad)rotateX(5rad)scale(3`
+        this[`t${i+j}`].style.transform=`translate3D(${j*3+2}in,${i*3+1}in,${navigator.platform[5]?1.5:2}in)rotateZ(${-a}rad)rotateX(5rad)scale(3`
       )
     )
     :(
       s.innerHTML+=
       m[i]>>j&1
-      ?`<div style=position:fixed;padding:1.6in;background:#961;transform:translate(${j*3+.6}in,${i*3+.6}in id=g${i+j}>`
+      ?`<div style=position:fixed;padding:1.51in;background:#961;transform:translate(${j*3+.5}in,${i*3+.5}in id=g${i+j}>`
       :q++%8
       ?`<div style=position:fixed;font:1in'' id=t${i+j}>`+[...`🌳🌲🌵🌴`][q%4]
       :``

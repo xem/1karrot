@@ -5,14 +5,15 @@
 //  Can I Has 1Karrot ?
 // =====================
 
-// The magician's rabbit has escaped the stage and looks for his carrot in a strange jungle maze...
+// The magician's rabbit has escaped the stage and is looking for his carrot in a strange maze...
 // Controls: Arrow keys or WASD or ZQSD.
-// JS1k demo by Maxime EUZIERE (xem.github.io), rendered only with CSS3D and emoji characters.
-// Optimized for running on latest Windows 10 / Mac OS, on Firefox, Chrome and Safari browsers.
-// Linux users will see monochrome emoji or nothing. It's recommended to install the Emoji One font:
+// JS1k demo by Maxime EUZIERE (http://xem.github.io), rendered only with CSS3D and emoji characters.
+// Optimized for running on latest Windows 10 and Mac OS and on Webkit browsers.
+// Firefox is supported too but can be a little glitchy.
+// Linux users will see monochrome emoji or black squares. They should install the Emoji One font:
 // Download https://goo.gl/J7GbE6 => right-click on the file => install as system font.
-// The demo abuses HTML & CSS hacks to save space, and abuses repetitions to optimize for RegPack.
-// Minified code is 1758 bytes long, RegPack'd code is 1024 bytes long.
+// The demo abuses HTML & CSS hacks to save space, and repeats a lot of code to optimize for RegPack.
+// Minified code is x bytes long, RegPack'd code is x bytes long.
 // This demo generates about 20kb of HTML code.
 
 // Initializations
@@ -20,9 +21,6 @@
 
 // Frame counter
 t =
-
-// Carrot found
-c =
 
 // Tree counter
 q =
@@ -33,41 +31,20 @@ u = d = l = r = 0;
 // Game loop
 // ---------
 
-// The content of this function is passed to RegPack.
+// The content of this function is sent to RegPack.
 // (Settings: do not rename var "b", score: 1/1/0)
-// The result (998 bytes long) is then placed in the following snippet without the final eval statement:
+// The result (x bytes long) is then placed in the following snippet without the final eval statement:
 // t=H=u=d=l=r=0;(PACKED CODE);setInterval(_,33)
-// Which makes a total of 1024b.
+// Which makes a total of x bytes.
 // Note: the variable 'q' is renamed to 'H' by RegPack.
 setInterval(function(e){
 
 // If the game has started (t > 0):
-// (t=0 on load, so this part of the code is ignored. Then at each frame, t>0 and this part is executed).
+// (On load, t==0, so this part of the code is ignored.).
 t
 ?(
-  
-  // Increment c if the bunny's X position is over 45in.
-  // (the tile containing the carrot is the only walkable tile on the 15th column, so walking on it is the winning criteria).
-  x > 45
-  
-  // If the carrot is found (c != 0):
-  ? (
-  
-    // Reset the rabbit's angle to 0.
-    a = 0,
-    
-    // Give the scene a CSS transition duration of 5 seconds.
-    s.style.transition = `5s`,
-    
-    // Then give the scene a different angle and position to see it dezoomed and from above.
-    // (The last closing parenthesis of a CSS rule can be omitted)
-    s.style.transform = `rotateX(25deg)translate3D(-23in,-23in,-23in`
-  )
-  
-  //
-  : s.style.transform = `rotateX(.8rad)rotateZ(${a}rad)translate(${-x}in,${-y}in`,
-  
-  //
+
+  // backup the value of x and y (the rabbit's position)
   v = x,
   
   //
