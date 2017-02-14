@@ -2,7 +2,7 @@
 <script>
 
 // =====================
-//  Can I Has 1Karrot ?
+//  Can I Haz 1Karrot ?
 // =====================
 
 // The magician's rabbit has escaped the stage and is looking for his carrot in a strange forest...
@@ -113,8 +113,8 @@ t
     +
     
     // The rabbit, called "h".
-    // navigator.platform[5] is true on Mac OS and false on Windows and Linux
-    // On Mac OS, the rabbit's width is set to .6in. On other OS's, .7em.
+    // navigator.platform[5] is true on Mac OS and false on Windows and Linux.
+    // On Mac OS, the rabbit's width is set to .6in. On other platforms, .7em.
     // Mac OS emoji are not rendered with the same alignment,
     // so this custom width allows the rabbit's head to be right above the hat.
     `<a style=position:fixed;width:.${navigator.platform[5]?6:7}in;font:3em'' id=h>🐰`
@@ -122,65 +122,94 @@ t
       +
       
       // The rabbit's hat, reversed with "scale(-1)".
-      // The hat's line-height is .1in on MacOS and .5in on other OS's,
+      // The hat's line-height is .1in on MacOS and .5in on other platforms,
       // and the 9px translateY allows to place it just on the bottom of the rabbit's head.
       `<div style=font:60px/.${navigator.platform[5]?1:5}in'';transform:scale(-1)translateY(9px>🎩`
 ;
 
-//
+// The map (m) is encoded in binary: 1 = path, 0 = trees.
+// It is mirrored horizontally, because the code below uses it from right to left.
+
+// 0001010000000000       1 1                          1 1
+// 0101011111101111     1 1 111111 1111      1111 111111 1 1
+// 0111010000100100     111 1    1  1          1  1    1 111
+// 0011010011100100 ==   11 1  111  1    ==    1  111  1 11
+// 0111010010000101     111 1  1    1 1      1 1    1  1 111
+// 1101111011111111    11 1111 11111111      11111111  111 11
+// (binary encoding)     (ones only)           (mirrored)
+
+// For each line (i) ...
 for(i in m = [5120,22511,29732,13540,29829,57087])
   
-  //
+  // For each column (j) ...
   for(j = 16; j--;)
     
-    //
+    // If the game has started (t > 0):
     t
     ?
       
-      //
+      // If a tree (or an animal or the carrot) exists at this line and column:
+      // i and j are not summed, because i is a string. ex: t00, ..., t015, t10, ..., t15, etc.
       this[`t${i + j}`] && (
         
-        //
-        this[`t${i + j}`].style.transform = `translate3D(${j*3+2}in,${i*3+1.5}in,${navigator.platform[5]?1.5:2}in)rotateZ(${-a}rad)rotateX(5rad)rotateY(${this[`t${i+j}`].tagName[2]?0:Math.sin(t/5)/5}rad)scale(2.5`,
+        // Place the tree at the right position on the scene:
+        // translateX: j*3+2, translateY: i*3+2, translateZ: 1.5 on MaCOS, 2 on other platforms.
+        // rotateZ: -a (to cancel the scene rotation and face the camera)
+        // rotateX: 5rad (to be slanted towards the camera)
+        this[`t${i + j}`].style.transform = `translate3D(${j*3+2}in,${i*3+1.5}in,${navigator.platform[5]?1.5:2}in)rotateZ(${-a}rad)rotateX(5rad)rotateY(${
         
-        //
+          // Real trees are <div> elements. The animals and the carrot are <a> elements.
+          // Real trees can be identified with the test "this[`t${i + j}`].tagName[2]".
+          // rotateY: 0 for real trees, Math.sin(t/5)/5 for the rest. (to animate them a little).
+          this[`t${i + j}`].tagName[2]
+          ? 0
+          : Math.sin(t / 5) / 5
+        
+        // Everything is scaled 2.5 times because webkit browsers can't display emoji with font-sizes > 200px.
+        }rad)scale(2.5`,
+        
+        // If the rabbit's x is over 46in (on the rightmost column, where the carrot is), play the final animation:
         x > 46 ? (
           
-          //
+          // Set a 5-second CSS transition to the whole scene.
           s.style.transition = `5s`,
           
-          //
-          a=0,
+          // Reset the angle of the scene, the rabbits and the trees.
+          a = 0,
           
-          //
-          s.style.transform=`rotateX(.5rad)translate3D(-23in,-23in,-23in`
+          // Place the scene far from the camera and almost vertical to see the full path centered on the screen.
+          s.style.transform = `rotateX(.5rad)translate3D(-23in,-23in,-23in`
         )
         
-        //
-        : s.style.transform=`rotateX(.7rad)rotateZ(${a}rad)translate(${-x}in,${-y}in`
+        // Otherwise, just rotate the scene according to a, and move it according to x and y.
+        : s.style.transform = `rotateX(.7rad)rotateZ(${a}rad)translate(${-x}in,${-y}in`
         
       )
     
-    //
+    // If the game has not started (t == 0):
     :(
       
-      //
+      // Insert the ground tiles and the trees in the scene.
       s.innerHTML +=
       
-      //
+      // If the j'th bit of the i'th number of m is 1:
       m[i] >> j & 1
       
-      //
+      // Add a brown ground tile:
+      // "padding:1.51in" sets the width and the height to 3.02in. They overlap a little to avoid small gaps on some browsers.
+      // They're placed at X=(j*3+.5)in and Y=(i*3+.5)in to be well adjusted to the collision detection.
       ? `<div style=position:fixed;padding:1.51in;background:#961;transform:translate(${j * 3 + .5}in,${i * 3 + .5}in>`
       
-      //
+      // if current bit is 0:
       :
+        // Increment the tree counter (q), and test if q%8>0 and q>0.
+        // Firefox can't draw properly more than 100 CSS3D elements, so this test allows to remove a few trees from the scene.
         q++ % 8 && q
       
-        //
+        // Add a tree as a <div> element, with the id `t${i+j}`.
         ? `<div style=position:fixed;font:7em'' id=t${i + j}>`
           
-          //
+          // The (q%4)th tree is chosen from the array ["🌳","🌲","🌵","🌴"], built here with the ES6 spread operator ("...").
           + [...`🌳🌲🌵🌴`][q % 4]
       
         //
