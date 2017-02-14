@@ -48,7 +48,7 @@ t
   // backup the value of x and y (the rabbit's position).
   v = x,
   w = y,
-  
+
   // Update the rabbit's x, y and angle (a) according to the keys pressed:
   // the angle a is incremented or decremented of 1/30 radian with left and right keys.
   // Then x and y are incremented or decremented of 1/9 inch along this angle with up and down keys.
@@ -58,14 +58,14 @@ t
     a += (l - r) / 30
   ),
   y += (d - u) / 9 * Math.cos(a),
-  
+
   // Prevent the rabbit from going out of bounds (negative x or y) or out of the brown path:
   // Check if x > 0, y > 0 or if the tile below the rabbit belongs to the path.
   // (Tiles measure 3in * 3 in, so we're on the path if the ~~(x/3)th bit of the ~~(y/3)th value of m == 1)
   // If one of these three conditions is not fullfilled, revert x and y to their backup values.
   // This is how the game's collisions work.
   x > 0 && y > 0 && m[~~(y / 3)] >> ~~(x / 3) & 1 || (x = v, y = w),
-  
+
   // Place the rabbit on the scene according to x, y and a.
   // On the Z coordinate, the frame counter is passed to 3-Math.sin(t/5):
   // This makes the rabbit jump at the right speed and height, in em.
@@ -77,10 +77,10 @@ t
 // If the game hasn't started yet:
 // This code is only executed once, on load.
 :
-  
+
   // On the first frame, write some HTML inside the body element (called b).
   b.innerHTML =
-  
+
   // The scene container, used to set the viewport's height (95vh), perspective (7in) and background (green).
   // overflow:hidden obviously prevent to draw anything outside the viewport.
   `<div style=height:95vh;perspective:7in;overflow:hidden;background:#6e0>`
@@ -90,7 +90,7 @@ t
     // "margin:50vh+50%" is the same as "margin:50vh 50%", but without space.
     // Without spaces in the style attribute, the attribute quotes can be omitted.
     `<div style=transform-style:preserve-3d;margin:3in+50% id=s>`
-      
+
     +
 
     // The carrot and the 8 animals:
@@ -109,18 +109,18 @@ t
     <a style=position:fixed;font:3em'';padding:2em+0+0 id=t012>🐂
     <a style=position:fixed;font:3em'';padding:2em+0+0 id=t10>🐥
     <a style=position:fixed;font:3em'';padding:2em+0+0 id=t38>🐢`
-    
+
     +
-    
+
     // The rabbit, called "h".
     // navigator.platform[5] is true on Mac OS and false on Windows and Linux.
     // On Mac OS, the rabbit's width is set to .6in. On other platforms, .7em.
     // Mac OS emoji are not rendered with the same alignment,
     // so this custom width allows the rabbit's head to be right above the hat.
     `<a style=position:fixed;width:.${navigator.platform[5]?6:7}in;font:3em'' id=h>🐰`
-    
+
       +
-      
+
       // The rabbit's hat, reversed with "scale(-1)".
       // The hat's line-height is .1in on MacOS and .5in on other platforms,
       // and the 9px translateY allows to place it just on the bottom of the rabbit's head.
@@ -140,95 +140,106 @@ t
 
 // For each line (i) ...
 for(i in m = [5120,22511,29732,13540,29829,57087])
-  
+
   // For each column (j) ...
   for(j = 16; j--;)
-    
+
     // If the game has started (t > 0):
     t
     ?
-      
+
       // If a tree (or an animal or the carrot) exists at this line and column:
       // i and j are not summed, because i is a string. ex: t00, ..., t015, t10, ..., t15, etc.
+      // All elements with ids are available as a global var.
+      // More info: http://xem.github.io/articles/#implicitgetelementbyid_en
+      // The game is iframed on JS1k.com so we can't access global vars with top[t${i+j}].
+      // We can use window, self or this though, so I chose "this".
       this[`t${i + j}`] && (
-        
+
         // Place the tree at the right position on the scene:
         // translateX: j*3+2, translateY: i*3+2, translateZ: 1.5 on MaCOS, 2 on other platforms.
         // rotateZ: -a (to cancel the scene rotation and face the camera)
         // rotateX: 5rad (to be slanted towards the camera)
         this[`t${i + j}`].style.transform = `translate3D(${j*3+2}in,${i*3+1.5}in,${navigator.platform[5]?1.5:2}in)rotateZ(${-a}rad)rotateX(5rad)rotateY(${
-        
+
           // Real trees are <div> elements. The animals and the carrot are <a> elements.
           // Real trees can be identified with the test "this[`t${i + j}`].tagName[2]".
           // rotateY: 0 for real trees, Math.sin(t/5)/5 for the rest. (to animate them a little).
           this[`t${i + j}`].tagName[2]
           ? 0
           : Math.sin(t / 5) / 5
-        
+
         // Everything is scaled 2.5 times because webkit browsers can't display emoji with font-sizes > 200px.
         }rad)scale(2.5`,
-        
+
         // If the rabbit's x is over 46in (on the rightmost column, where the carrot is), play the final animation:
         x > 46 ? (
-          
+
           // Set a 5-second CSS transition to the whole scene.
           s.style.transition = `5s`,
-          
+
           // Reset the angle of the scene, the rabbits and the trees.
           a = 0,
-          
-          // Place the scene far from the camera and almost vertical to see the full path centered on the screen.
+
+          // Place the scene far from the camera and almost vertical to see the full path centered on the screen (with the surprise!).
           s.style.transform = `rotateX(.5rad)translate3D(-23in,-23in,-23in`
         )
-        
+
         // Otherwise, just rotate the scene according to a, and move it according to x and y.
         : s.style.transform = `rotateX(.7rad)rotateZ(${a}rad)translate(${-x}in,${-y}in`
-        
+
       )
-    
+
     // If the game has not started (t == 0):
     :(
-      
+
       // Insert the ground tiles and the trees in the scene.
       s.innerHTML +=
-      
+
       // If the j'th bit of the i'th number of m is 1:
       m[i] >> j & 1
-      
+
       // Add a brown ground tile:
       // "padding:1.51in" sets the width and the height to 3.02in. They overlap a little to avoid small gaps on some browsers.
       // They're placed at X=(j*3+.5)in and Y=(i*3+.5)in to be well adjusted to the collision detection.
       ? `<div style=position:fixed;padding:1.51in;background:#961;transform:translate(${j * 3 + .5}in,${i * 3 + .5}in>`
-      
+
       // if current bit is 0:
       :
         // Increment the tree counter (q), and test if q%8>0 and q>0.
         // Firefox can't draw properly more than 100 CSS3D elements, so this test allows to remove a few trees from the scene.
         q++ % 8 && q
-      
+
         // Add a tree as a <div> element, with the id `t${i+j}`.
         ? `<div style=position:fixed;font:7em'' id=t${i + j}>`
-          
-          // The (q%4)th tree is chosen from the array ["🌳","🌲","🌵","🌴"], built here with the ES6 spread operator ("...").
+
+          // The (q%4)'th tree is chosen from the array ["🌳","🌲","🌵","🌴"], built here with the ES6 spread operator ("...").
           + [...`🌳🌲🌵🌴`][q % 4]
-      
-        //
+
+        // Add nothing if no tree is needed here.
         : ``,
-      
-    //
+
+    // The following code is used to handle keyboard input, either with arrow keys, or WASD, or ZQSD.
+    // More info on this blog post: http://xem.github.io/articles/#jsgamesinputs
+    // up (u), right (r), down (d) and left (l) are initialized at 0.
+    // On key down, a global var is set to 1 according to their (keyCode+3)%20.
+    // e.which works like e.keyCode for these keys, but it's shorter.
+    // u = Key up = 38, W = 90, Z = 87
+    // r = Key right = 39, D = 68
+    // d = Key down = 40, S = 83
+    // l = Key left = 37, A = 65, Q = 81.
+    // All these (keyCodes+3)%20 equal the position of the following var in the string 'lurdl*d*l*ur*u'.
     onkeydown= e => this['lurdl*d*l*ur*u'[(e.which + 3) % 20]] = 1,
-    
-    //
+
+    // Reset the direction vars to 0 when the corresponding keys are released.
     onkeyup = e => this['lurdl*d*l*ur*u'[(e.which + 3) % 20]] = 0,
-    
-    //
+
+    // Initial position (x, y) and angle (a) of the rabbit.
     x = 3,
-    
-    //
     y = a = 5
   );
 
-//
+// Increment the frame counter
 t++
 
 },33)
