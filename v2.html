@@ -1,0 +1,40 @@
+<meta charset=utf-8>
+<body id=b>
+<script>
+q=u=d=l=r=f=0;
+setInterval(function(e){
+f?(
+  v=x,
+  w=y,
+  x+=(d-u)/9*Math.sin(a+=(l-r)/30),
+  y+=(d-u)/9*Math.cos(a),
+  x>0&&y>0&&m[~~(y/3)]>>~~(x/3)&1||(x=v,y=w),
+  t.style.transform=`translate3D(${x}in,${y}in,${3+Math.sin(f/5)}em)rotateZ(${-a}rad)rotateX(5rad`
+)
+:
+  b.innerHTML=`<div style=height:95vh;perspective:7in;overflow:hidden;background:#6e0><div style=transform-style:preserve-3d;margin:50vh+50% id=s><a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t515>🥕<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t010>🐒<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t40>🐍<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t114>🐆<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t59>🦍<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t24>🐌<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t012>🐂<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t10>🐥<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t38>🐢<a onkeyup style=position:fixed;width:.${navigator.platform[x=y=a=5]?6:7}in;font:3em'' id=t>🐰<div style=font:60px/.${navigator.platform[x=y=a=5]?1:5}in'';transform:scale(-1)translate3D(0,9px,0>🎩`
+;
+for(i in m=[5120,22511,29732,13540,29829,57087])
+  for(j=16;j--;)
+    f?
+      this[`t${i+j}`]&&(
+        this[`t${i+j}`].style.transform=`translate3D(${j*3+1.5}in,${i*3+1}in,2in)rotateZ(${-a}rad)rotateX(5rad)rotateY(${this[`t${i+j}`].onkeyup?Math.sin(f/5)/5:0}rad)scale(2.5`,
+        x>46?(
+          this[`t${i+j}`].style.transition=this[`t${i+j}`].onkeyup?a=0:s.style.transition=`5s`,
+          s.style.transform=`rotateX(.5rad)translate3D(-23in,-23in,-23in`
+        )
+        :s.style.transform=`rotateX(.7rad)rotateZ(${a}rad)translate3D(${-x}in,${-y}in,0`
+      )
+    :(
+      s.innerHTML+=m[i]>>j&1
+      ?`<div style=position:fixed;padding:1.51in;background:#961;transform:translate3D(${j*3+.5}in,${i*3+.5}in,0>`
+      :q++%8
+        ?`<div style=position:fixed;font:7em'' id=t${i+j}>`+[...`🌳🌲🌵🌴`][q%4]
+        :``,
+      onkeydown=e=>this[`lurdl*d*l*ur*u`[(e.which+3)%20]]=1,
+      onkeyup=e=>this[`lurdl*d*l*ur*u`[(e.which+3)%20]]=0
+    );
+f++
+
+},33)
+</script>

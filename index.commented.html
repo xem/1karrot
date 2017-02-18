@@ -7,7 +7,7 @@
 
 // The magician's rabbit has escaped the stage and is looking for his carrot in a strange forest...
 // Controls: Arrow keys or WASD or ZQSD.
-// JS1k demo by Maxime EUZIERE (http://xem.github.io), rendered only with CSS3D and emoji characters.
+// JS1k demo by Maxime Euzière (http://xem.github.io), rendered only with CSS3D and emoji characters.
 // Optimized for running on latest Windows 10 and Webkit browsers.
 // Can also run on latest Mac OS (but the emoji are quite ugly).
 // Can also run on Firefox (but it's a little glitchy).
@@ -71,6 +71,8 @@ t
   // This makes the rabbit jump at the right speed and height, in em.
   // the final rotateX(5rad) is used to make the rabbit less vertical, and more slanted towards the camera.
   // In CSS, the last closing parenthesis of a rule can be omitted to save a byte.
+  // All elements with ids exist as a global var, that's why we can update the rabbit's style by calling it "h".
+  // More info: http://xem.github.io/articles/#implicitgetelementbyid_en
   h.style.transform = `translate3D(${x}in,${y}in,${3 - Math.sin(t / 5)}em)rotateZ(${-a}rad)rotateX(5rad`
 )
 
@@ -150,8 +152,6 @@ for(i in m = [5120,22511,29732,13540,29829,57087])
 
       // If a tree (or an animal or the carrot) exists at this line and column:
       // i and j are not summed, because i is a string. ex: t00, ..., t015, t10, ..., t15, etc.
-      // All elements with ids are available as a global var.
-      // More info: http://xem.github.io/articles/#implicitgetelementbyid_en
       // The game is iframed on JS1k.com so we can't access global vars with top[t${i+j}].
       // We can use window, self or this though, so I chose "this".
       this[`t${i + j}`] && (
