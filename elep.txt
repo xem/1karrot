@@ -1,1 +1,0 @@
-<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t313>🐘
