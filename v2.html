@@ -1,14 +1,14 @@
 ﻿<meta charset=utf-8>
 <body id=b>
 <script>
-q=u=l=r=f=0;
+q=u=d=l=r=f=0;
 setInterval(function(e){
 
 f?(
   v=x,
   w=y,
-  x-=u/9*Math.sin(a+=(l-r)/30),
-  y-=u/9*Math.cos(a),
+  x+=(d-u)/9*Math.sin(a+=(l-r)/30),
+  y+=(d-u)/9*Math.cos(a),
   x>0&&y>0&&m[~~(y/3)]>>x/3&1||(x=v,y=w),
   t.style.transform=`translate3D(${x}in,${y}in,${3+Math.sin(f/5)}em)rotateZ(${-a}rad)rotateX(5rad`
 )
@@ -32,8 +32,8 @@ for(i in m=[5120,22511,29732,13540,29829,57087])
       :q++%8&&q>2
         ?`<div style=position:fixed;font:7em'' id=t${i+j}>`+[...`🌳🌲🌵🌴`][q%4]
         :``,
-      onkeydown=e=>this[`lurdl***l*ur*u`[(e.which+3)%20]]=1,
-      onkeyup=e=>this[`lurdl***l*ur*u`[(e.which+3)%20]]=0
+      onkeydown=e=>this[`lurdl*d*l*ur*u`[(e.which+3)%20]]=1,
+      onkeyup=e=>this[`lurdl*d*l*ur*u`[(e.which+3)%20]]=0
     );
 f++
 
