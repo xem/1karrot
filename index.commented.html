@@ -11,26 +11,27 @@
 // The magician's rabbit has escaped the stage and is looking for his carrot in a strange forest...
 // Controls: Arrow keys or WASD or ZQSD.
 // Demo by Maxime Euzière (http://xem.github.io) for JS1k 2017, rendered only with CSS3D and emoji characters.
+// CSS3D engine inspired by this study / tutorial: http://xem.github.io/articles/#css3d
 // Optimized for running on latest Windows 10 and Webkit browsers (Chrome, Opera...)
 // also optimized to not explode on Firefox (but it's still a little glitchy).
 // and also optimized to run on latest MacOS, and on Safari (but MacOS emoji are less cool).
 // Linux users will see monochrome emoji or black squares, but they can install the Emoji One font
 // (Download https://goo.gl/J7GbE6 => right-click on the file => install as system font.)
 // This demo abuses HTML & CSS hacks to save space, and repeats a lot of code to optimize for RegPack.
-// Minified code is x bytes long, RegPack'd code is x bytes long.
-// This demo generates about xkb of HTML code.
-// It contains exactly 100 "CSS3D" elements (ground tiles, trees, animals),
-// because Firefox < 53 can't render more than 100 elements correctly,
+// This demo generates about 23kb of HTML code.
+// It contains exactly 100 CSS3D elements (the rabbit, hat, carrot, ground tiles, trees and animals),
+// because Firefox < 53 can't render more than 100 CSS3D elements correctly,
 // and sadly Fx 53 releases 2 months after JS1k 2017.
 
 // Build process:
 // --------------
 
-// The content of the loop function is sent to RegPack.
-// (Settings: do not rename vars "b q j", score: 1/0/0, longest strings first)
-// The packed code is x bytes long.
-// The end of the packed code "_=join(shift());eval(_)" is replaced with "_=join(shift(q=u=d=l=r=f=0));setInterval(_,33)"
-// Which makes a total of x bytes, submitted to JS1k.
+// The content of the loop function is minified (2017 bytes) and sent to RegPack.
+// Regpack settings: do not rename vars "b q j", score: 1/0/0, longest strings first.
+// The packed code is 1000 bytes long.
+// The end of the packed code "_=join(shift());eval(_)" is replaced with
+// "_=join(shift(q=u=d=l=r=f=0));setInterval(_,33)"
+// Which makes a total of 1023 bytes, then submitted to JS1k.
 
 // Initializations
 // ---------------
@@ -48,6 +49,102 @@ f = 0;
 // ---------
 
 setInterval(function(e){
+
+// At the beginning of the demo, f == 0, so this part of the code is executed once:
+f || 
+(
+
+  // Keyboard inputs:
+  // The rabbit is controlled with the arrow keys, or WASD, or ZQSD.
+  // More info on this blog post: http://xem.github.io/articles/#jsgamesinputs
+  // up (u), right (r), down (d) and left (l) are initialized at 0.
+  // When a key is down, one of these global vars is set to 1 according to the keyCode (also called "which").
+  
+  // Direction | e.which  | (e.which+3)%20
+  // ==========+==========+===============
+  // Up        | ↑ = 38   | 1
+  //           | W = 90   | 12
+  //           | Z = 87   | 10
+  // ----------+----------+---------------
+  // Right     | → = 39   | 2
+  //           | D = 68   | 11
+  // ----------+----------+---------------
+  // Down      | ↓ = 40   | 3
+  //           | S = 83   | 6
+  // ----------+----------+---------------
+  // Left      | ← = 37   | 0
+  //           | A = 65   | 8
+  //           | Q = 81   | 4
+  
+  // All these (keyCodes+3)%20 equal the position of the following var in the string 'lurdl*d*l*ur*u'.
+  onkeydown=e=>this[`lurdl*d*l*ur*u`[(e.which+3)%20]]=1,
+  onkeyup=e=>this[`lurdl*d*l*ur*u`[(e.which+3)%20]]=0,
+  
+  // HTML / CSS content:
+  b.innerHTML=`<div style=height:95vh;perspective:7in;overflow:hidden;background:#6e0><div style=transform-style:preserve-3d;margin:50vh+50% id=s><a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t515>🥕<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t10>🐌<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t010>🐒<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t40>🐍<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t012>🐂<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t07>🐥<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t59>🦍<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t46>🐢<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t214>🐘<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t33>🐆<a onkeyup style=position:fixed;width:.${navigator.platform[x=y=a=5]?6:7}in;font:3em'' id=t>🐰<div style=font:.6in/.${navigator.platform[x=y=a=5]?1:5}in'';transform:scale(-1)>🎩`
+);
+
+//
+for(i in m=[5120,22511,29732,13540,29829,57087])
+  
+  //
+  for(j=16;j--;)
+    
+    //
+    f ||
+    (
+      s.innerHTML+=m[i]>>j&1
+      ?`<div style=position:fixed;padding:1.51in;background:#961;transform:translate3D(${j*3+.5}in,${i*3+.5}in,0)>`
+      :q++&&q%7
+        ?`<div style=position:fixed;font:7em'' id=t${i+j}>`+[...`🌳🌲🌵🌴`][q%4]
+        :``
+    ),
+    
+    //
+    this[`t${i+j}`]&&(
+      this[`t${i+j}`].style.transform=`translate3D(${j*3+1.5}in,${i*3+1}in,2in)rotateZ(${-a}rad)rotateX(5rad)rotateY(${this[`t${i+j}`].onkeyup?Math.sin(f/5)/5:0}rad)scale(2.5)`,
+      
+      //
+      x>46?(
+        this[`t${i+j}`].style.transition=this[`t${i+j}`].onkeyup?a=0:s.style.transition=`5s`,
+        s.style.transform=`rotateX(.5rad)translate3D(-24in,-24in,-24in)`
+      )
+      
+      //
+      :s.style.transform=`rotateX(.7rad)rotateZ(${a}rad)translate3D(${-x}in,${-y}in,0)`
+    );
+
+// Rabbit animation:
+v=x,
+w=y,
+x+=(d-u)/9*Math.sin(a+=(l-r)/30),
+y+=(d-u)/9*Math.cos(a),
+x>0&&y>0&&m[~~(y/3)]>>x/3&1||(x=v,y=w),
+t.style.transform=`translate3D(${x}in,${y}in,${3+Math.sin(f/5)}em)rotateZ(${-a}rad)rotateX(5rad)`,
+
+//
+f++
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // If the game has started (f > 0):
 // On load, f==0, so this part of the code is ignored.
@@ -215,6 +312,9 @@ for(i in m = [5120,22511,29732,13540,29829,57087])
       // Add a brown ground tile:
       // "padding:1.51in" sets the width and the height to 3.02in. They overlap a little to avoid small gaps on some browsers.
       // They're placed at X=(j*3+.5)in and Y=(i*3+.5)in to be well adjusted to the collision detection.
+      // The ground could have been made of just one element with multiple box-shadows,
+      // And much more trees and animals could have been included in the scene,
+      // it's as long as this version, but it's too glitchy on many browsers, so I didn't keep it.
       ? `<div style=position:fixed;padding:1.51in;background:#961;transform:translate(${j * 3 + .5}in,${i * 3 + .5}in>`
 
       // if current bit is 0:
@@ -232,16 +332,7 @@ for(i in m = [5120,22511,29732,13540,29829,57087])
         // Add nothing if no tree is needed here.
         : ``,
 
-    // The following code is used to handle keyboard input, either with arrow keys, or WASD, or ZQSD.
-    // More info on this blog post: http://xem.github.io/articles/#jsgamesinputs
-    // up (u), right (r), down (d) and left (l) are initialized at 0.
-    // On key down, a global var is set to 1 according to their (keyCode+3)%20.
-    // e.which works like e.keyCode for these keys, but it's shorter.
-    // u = Key up = 38, W = 90, Z = 87
-    // r = Key right = 39, D = 68
-    // d = Key down = 40, S = 83
-    // l = Key left = 37, A = 65, Q = 81.
-    // All these (keyCodes+3)%20 equal the position of the following var in the string 'lurdl*d*l*ur*u'.
+    
     onkeydown= e => this['lurdl*d*l*ur*u'[(e.which + 3) % 20]] = 1,
 
     // Reset the direction vars to 0 when the corresponding keys are released.
