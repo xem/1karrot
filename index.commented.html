@@ -247,6 +247,10 @@ for(i in m = [5120,22511,29732,13540,29829,57087])
     // Reset the direction vars to 0 when the corresponding keys are released.
     onkeyup = e => this['lurdl*d*l*ur*u'[(e.which + 3) % 20]] = 0,
 
+    // The code above can't be simplified to: 
+    // "onkeyup=onkeydown=e=>this[`lurdl*d*l*ur*u`[(e.which+3)%20]]^=1"
+    // because onkeydown is triggered multiple times during a long key press.
+
     // Initial position (x, y) and angle (a) of the rabbit.
     x = 3,
     y = a = 5
