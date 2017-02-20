@@ -1,37 +1,43 @@
 ﻿<body id=b>
 <script>
 
-// =====================
-//  Can I Haz 1Karrot ?
-// =====================
+/*
 
-// Introduction:
-// -------------
+=====================
+ Can I Haz 1Karrot ?
+=====================
 
-// The magician's rabbit has escaped the stage and is looking for his carrot in a strange forest...
-// Controls: Arrow keys or WASD or ZQSD.
-// Demo by Maxime Euzière (http://xem.github.io) for JS1k 2017, rendered only with CSS3D and emoji characters.
-// CSS3D engine inspired by this study / tutorial: http://xem.github.io/articles/#css3d
-// Optimized for running on latest Windows 10 and Webkit browsers (Chrome, Opera...)
-// also optimized to not explode on Firefox (but it's still a little glitchy).
-// and also optimized to run on latest MacOS, and on Safari (but MacOS emoji are less cool).
-// Linux users will see monochrome emoji or black squares, but they can install the Emoji One font
-// (Download https://goo.gl/J7GbE6 => right-click on the file => install as system font.)
-// This demo abuses HTML & CSS hacks to save space, and repeats a lot of code to optimize for RegPack.
-// This demo generates about 23kb of HTML code.
-// It contains exactly 100 CSS3D elements (the rabbit, hat, carrot, ground tiles, trees and animals),
-// because Firefox < 53 can't render more than 100 CSS3D elements correctly,
-// and sadly Fx 53 releases 2 months after JS1k 2017.
+Introduction:
+-------------
 
-// Build process:
-// --------------
+The magician's rabbit has escaped the stage with its hat and is looking for his carrot in a strange forest...
+In it doesn't appear nice, you can watch a video capture in ideal conditions here: http://...
+Controls: Arrow keys or WASD or ZQSD. (more info: https://goo.gl/H2PPd7)
+Demo by Maxime Euzière (http://xem.github.io) for JS1k 2017, rendered only with CSS3D and emoji characters.
+CSS3D engine inspired by https://goo.gl/6t6npT.
+Optimized for running on latest Windows 10 and Webkit browsers (Chrome, Opera...)
+also optimized to not explode on Firefox (but it's still a little glitchy).
+also optimized to run on latest MacOS, and on Safari (but MacOS emoji are less nice).
+Linux users will see monochrome emoji or black squares, but they can install the Emoji One font
+(Download https://goo.gl/J7GbE6 => right-click on the file => install as system font.)
+This demo abuses HTML & CSS hacks to save space, and repeats a lot of code to optimize for RegPack.
+This demo generates about 23kb of HTML code.
+It contains exactly 100 CSS3D elements (the rabbit, hat, carrot, ground tiles, trees and animals),
+because Firefox < 53 can't render more than 100 CSS3D elements correctly (and sadly Fx 53 releases in 2 months).
+The demo is iframed on JS1k.com, so the global scope "top" is replaced with "this".
+Elements with an id can be accessed as global vars, with this["id"]. (more info: https://goo.gl/JNN6S5)
 
-// The content of the loop function is minified (2017 bytes) and sent to RegPack.
-// Regpack settings: do not rename vars "b q j", score: 1/0/0, longest strings first.
-// The packed code is 1000 bytes long.
-// The end of the packed code "_=join(shift());eval(_)" is replaced with
-// "_=join(shift(q=u=d=l=r=f=0));setInterval(_,33)"
-// Which makes a total of 1023 bytes, then submitted to JS1k.
+Build process:
+--------------
+
+The content of the loop function is minified (2017 bytes) and sent to RegPack.
+Regpack settings: do not rename vars "b q j", score: 1/0/0, longest strings first.
+The packed code is 1000 bytes long.
+The end of the packed code "_=join(shift());eval(_)" is replaced with
+"_=join(shift(q=u=d=l=r=f=0));setInterval(_,33)"
+Which makes a total of 1023 bytes, then submitted to JS1k.
+
+*/
 
 // Initializations
 // ---------------
@@ -50,33 +56,37 @@ f = 0;
 
 setInterval(function(e){
 
-// At the beginning of the demo, f == 0, so this part of the code is executed once:
+// At the beginning of the demo, f == 0, then f is incremented at each frame.
+// So the following code is executed once:
 f || 
 (
 
   // Keyboard inputs:
   // The rabbit is controlled with the arrow keys, or WASD, or ZQSD.
-  // More info on this blog post: http://xem.github.io/articles/#jsgamesinputs
   // up (u), right (r), down (d) and left (l) are initialized at 0.
-  // When a key is down, one of these global vars is set to 1 according to the keyCode (also called "which").
+  // When a key is down, one of these global vars is set to 1 according to the current keyCode (also called "which").
   
-  // Direction | e.which  | (e.which+3)%20
-  // ==========+==========+===============
-  // Up        | ↑ = 38   | 1
-  //           | W = 90   | 12
-  //           | Z = 87   | 10
-  // ----------+----------+---------------
-  // Right     | → = 39   | 2
-  //           | D = 68   | 11
-  // ----------+----------+---------------
-  // Down      | ↓ = 40   | 3
-  //           | S = 83   | 6
-  // ----------+----------+---------------
-  // Left      | ← = 37   | 0
-  //           | A = 65   | 8
-  //           | Q = 81   | 4
+  // Direction | key | e.which | (e.which+3)%20
+  // ==========+=====+=========+===============
+  // Up        | ↑   | 38      | 1
+  //           | W   | 90      | 12
+  //           | Z   | 87      | 10
+  // ----------+-----+---------+----
+  // Right     | →   | 39      | 2
+  //           | D   | 68      | 11
+  // ----------+-----+---------+----
+  // Down      | ↓   | 40      | 3
+  //           | S   | 83      | 6
+  // ----------+-----+---------+----
+  // Left      | ←   | 37      | 0
+  //           | A   | 65      | 8
+  //           | Q   | 81      | 4
   
-  // All these (keyCodes+3)%20 equal the position of the following var in the string 'lurdl*d*l*ur*u'.
+  // The string 'lurdl*d*l*ur*u' is built from each value of "(e.which+3)%20".
+  // When a key is down, the corresponding global is set to 1.
+  // When a key is up, it is set to 0.
+  // The code below can't be merged into "onkeydown=onkeyup=e=>this[`lurdl*d*l*ur*u`[(e.which+3)%20]]^=1"
+  // Because multiple keydown events are triggered when a key is pressed for a few seconds.
   onkeydown=e=>this[`lurdl*d*l*ur*u`[(e.which+3)%20]]=1,
   onkeyup=e=>this[`lurdl*d*l*ur*u`[(e.which+3)%20]]=0,
   
@@ -182,7 +192,6 @@ f
   // the final rotateX(5rad) is used to make the rabbit less vertical, and more slanted towards the camera.
   // In CSS, the last closing parenthesis of a rule can be omitted to save a byte.
   // All elements with ids exist as a global var, that's why we can update the rabbit's style by calling it "h".
-  // More info: http://xem.github.io/articles/#implicitgetelementbyid_en
   h.style.transform = `translate3D(${x}in,${y}in,${3 - Math.sin(t / 5)}em)rotateZ(${-a}rad)rotateX(5rad`
 )
 
