@@ -46,7 +46,7 @@ Which makes a total of 1023 bytes, then submitted to JS1k.
 q =
 
 // Up / down / left / right keys pressed
-u = d = l = r
+u = d = l = r =
 
 // Frame counter
 f = 0;
@@ -91,7 +91,26 @@ f ||
   onkeyup=e=>this[`lurdl*d*l*ur*u`[(e.which+3)%20]]=0,
   
   // HTML / CSS content:
-  b.innerHTML=`<div style=height:95vh;perspective:7in;overflow:hidden;background:#6e0><div style=transform-style:preserve-3d;margin:50vh+50% id=s><a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t515>🥕<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t10>🐌<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t010>🐒<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t40>🐍<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t012>🐂<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t07>🐥<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t59>🦍<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t46>🐢<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t214>🐘<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t33>🐆<a onkeyup style=position:fixed;width:.${navigator.platform[x=y=a=5]?6:7}in;font:3em'' id=t>🐰<div style=font:.6in/.${navigator.platform[x=y=a=5]?1:5}in'';transform:scale(-1)>🎩`
+  // Write some HTML inside the body element (called b)
+  b.innerHTML =
+  
+    // The scene container, used to set the viewport's height (95vh), perspective (7in) and background (green).
+    // overflow:hidden obviously prevent to draw anything outside the viewport.
+    `<div style=height:95vh;perspective:7in;overflow:hidden;background:#6e0>`
+    
+    + `<div style=transform-style:preserve-3d;margin:50vh+50% id=s>`
+    + `<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t515>🥕`
+    + `<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t10>🐌`
+    + `<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t010>🐒`
+    + `<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t40>🐍`
+    + `<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t012>🐂`
+    + `<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t07>🐥`
+    + `<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t59>🦍`
+    + `<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t46>🐢`
+    + `<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t214>🐘`
+    + `<a onkeyup style=position:fixed;font:3em'';padding:2em+0+0 id=t33>🐆`
+    + `<a onkeyup style=position:fixed;width:.${navigator.platform[x=y=a=5]?6:7}in;font:3em'' id=t>🐰`
+    + `<div style=font:.6in/.${navigator.platform[x=y=a=5]?1:5}in'';transform:scale(-1)>🎩`
 );
 
 //
@@ -153,7 +172,7 @@ f++
 
 
 
-
+/*
 
 
 // If the game has started (f > 0):
@@ -358,6 +377,8 @@ for(i in m = [5120,22511,29732,13540,29829,57087])
 
 // Increment the frame counter
 t++
+
+*/
 
 },33)
 </script>
